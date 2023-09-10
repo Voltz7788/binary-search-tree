@@ -56,11 +56,8 @@ class Tree {
     if (start > end) return null;
     const mid = Math.floor((start + end) / 2);
     const treeRoot = array[mid];
-    console.log(array);
     const subArray1 = array.slice(start, mid);
     const subArray2 = array.slice(mid + 1, end + 1);
-    console.log(subArray1);
-    console.log(subArray2);
     const subRootNode = new Node(
       treeRoot,
       this.createBST(subArray1, 0, subArray1.length - 1),
@@ -68,6 +65,24 @@ class Tree {
     );
 
     return subRootNode;
+  }
+
+  insert(newData, rootNode = this.root) {
+    if (rootNode === null) {
+      rootNode = new Node(newData, null, null);
+      return rootNode;
+    }
+    if (rootNode.data > newData) {
+      console.log(`${rootNode.data} greater than ${newData}`);
+      rootNode.leftChild = this.insert(newData, rootNode.leftChild);
+      return rootNode;
+    }
+
+    if (rootNode.data <= newData) {
+      console.log(`${rootNode.data} less than (or =) ${newData}`);
+      rootNode.rightChild = this.insert(newData, rootNode.rightChild);
+      return rootNode;
+    }
   }
 
   prettyPrint(node, prefix = "", isLeft = true) {
@@ -101,4 +116,6 @@ const testData = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 
 const myTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 
+console.log(myTree.getTree());
+console.log(myTree.insert(24));
 console.log(myTree.getTree());
